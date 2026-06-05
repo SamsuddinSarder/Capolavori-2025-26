@@ -1,0 +1,1985 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SmartMarket — Il Tuo Supermercato Online</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+/* =========================================
+   DESIGN SYSTEM
+========================================= */
+:root {
+  --green-900: #0a2e1a;
+  --green-800: #0f3d24;
+  --green-700: #145a32;
+  --green-600: #1a7a42;
+  --green-500: #22a454;
+  --green-400: #3dbd6e;
+  --green-300: #6fce94;
+  --green-100: #d4f5e2;
+  --green-50:  #edfaf3;
+
+  --amber-500: #f59e0b;
+  --amber-400: #fbbf24;
+  --amber-300: #fcd34d;
+
+  --red-500: #ef4444;
+  --red-400: #f87171;
+
+  --slate-900: #0f172a;
+  --slate-800: #1e293b;
+  --slate-700: #334155;
+  --slate-600: #475569;
+  --slate-400: #94a3b8;
+  --slate-200: #e2e8f0;
+  --slate-100: #f1f5f9;
+  --slate-50:  #f8fafc;
+  --white: #ffffff;
+
+  --bg: var(--slate-50);
+  --surface: var(--white);
+  --border: var(--slate-200);
+  --text: var(--slate-900);
+  --text-muted: var(--slate-600);
+
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+  --radius-xl: 28px;
+
+  --shadow-sm: 0 1px 3px rgba(0,0,0,.06), 0 1px 2px rgba(0,0,0,.04);
+  --shadow-md: 0 4px 16px rgba(0,0,0,.08), 0 2px 6px rgba(0,0,0,.04);
+  --shadow-lg: 0 12px 40px rgba(0,0,0,.12), 0 4px 14px rgba(0,0,0,.06);
+  --shadow-glow: 0 0 0 3px rgba(34,164,84,.25);
+
+  --transition: .2s cubic-bezier(.4,0,.2,1);
+
+  --header-h: 72px;
+}
+
+.dark {
+  --bg: #0b1620;
+  --surface: #111e2b;
+  --border: #1e3040;
+  --text: #e8f4f0;
+  --text-muted: #7aabb0;
+  --shadow-md: 0 4px 16px rgba(0,0,0,.3);
+  --shadow-lg: 0 12px 40px rgba(0,0,0,.4);
+}
+
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body {
+  font-family:'DM Sans', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  transition: background var(--transition), color var(--transition);
+  overflow-x: hidden;
+}
+
+::-webkit-scrollbar { width:6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--green-400); border-radius:99px; }
+
+h1, h2, h3 {
+  font-family:'DM Serif Display', serif;
+  line-height:1.15;
+}
+
+/* HEADER */
+header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  height: var(--header-h);
+  background: rgba(10,46,26,.96);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(255,255,255,.07);
+  display: flex;
+  align-items: center;
+  padding: 0 32px;
+  gap: 24px;
+}
+
+.header-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  flex-shrink: 0;
+  cursor: pointer;
+}
+
+.logo-icon {
+  width: 38px; height: 38px;
+  background: linear-gradient(135deg, var(--green-400), var(--green-600));
+  border-radius: var(--radius-sm);
+  display: grid;
+  place-items: center;
+  font-size: 18px;
+}
+
+.logo-text {
+  font-family: 'DM Serif Display', serif;
+  font-size: 20px;
+  color: var(--white);
+  letter-spacing: .5px;
+}
+
+.logo-text span { color: var(--green-300); }
+
+.header-search {
+  flex: 1;
+  max-width: 480px;
+  position: relative;
+}
+
+.header-search input {
+  width: 100%;
+  padding: 10px 16px 10px 42px;
+  background: rgba(255,255,255,.1);
+  border: 1px solid rgba(255,255,255,.12);
+  border-radius: 99px;
+  color: var(--white);
+  font-size: 14px;
+  font-family: inherit;
+  outline: none;
+  transition: var(--transition);
+}
+
+.header-search input::placeholder { color: rgba(255,255,255,.45); }
+.header-search input:focus {
+  background: rgba(255,255,255,.15);
+  border-color: var(--green-400);
+  box-shadow: 0 0 0 3px rgba(61,189,110,.2);
+}
+
+.search-icon {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: rgba(255,255,255,.5);
+  font-size: 15px;
+  pointer-events: none;
+}
+
+.header-nav {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-left: auto;
+}
+
+.nav-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  border: 1px solid rgba(255,255,255,.12);
+  border-radius: 99px;
+  background: transparent;
+  color: rgba(255,255,255,.8);
+  font-size: 13px;
+  font-family: inherit;
+  font-weight: 500;
+  cursor: pointer;
+  transition: var(--transition);
+  white-space: nowrap;
+}
+
+.nav-btn:hover {
+  background: rgba(255,255,255,.1);
+  color: var(--white);
+  border-color: rgba(255,255,255,.25);
+}
+
+.nav-btn.active {
+  background: var(--green-600);
+  border-color: var(--green-500);
+  color: var(--white);
+}
+
+.nav-btn-cart {
+  background: var(--green-500);
+  border-color: var(--green-400);
+  color: var(--white);
+  position: relative;
+}
+
+.nav-btn-cart:hover { background: var(--green-400); }
+
+.cart-badge {
+  position: absolute;
+  top: -6px; right: -6px;
+  background: var(--amber-400);
+  color: var(--slate-900);
+  font-size: 11px;
+  font-weight: 700;
+  min-width: 18px;
+  height: 18px;
+  border-radius: 99px;
+  display: grid;
+  place-items: center;
+  padding: 0 4px;
+}
+
+/* MAIN LAYOUT */
+.app-layout {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 32px 24px;
+}
+
+/* VIEWS */
+.view { display: none; animation: fadeIn .3s ease; }
+.view.active { display: block; }
+
+@keyframes fadeIn {
+  from { opacity:0; transform: translateY(8px); }
+  to   { opacity:1; transform: translateY(0); }
+}
+
+/* HERO */
+.hero {
+  background: linear-gradient(135deg, var(--green-900) 0%, var(--green-700) 60%, var(--green-500) 100%);
+  border-radius: var(--radius-xl);
+  padding: 60px 48px;
+  margin-bottom: 40px;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -80px; right: -80px;
+  width: 340px; height: 340px;
+  background: radial-gradient(circle, rgba(61,189,110,.35) 0%, transparent 70%);
+  border-radius: 50%;
+}
+
+.hero::after {
+  content: '🛒';
+  position: absolute;
+  bottom: -20px; right: 48px;
+  font-size: 160px;
+  opacity: .08;
+  line-height: 1;
+}
+
+.hero-tag {
+  display: inline-block;
+  background: rgba(255,255,255,.15);
+  color: var(--green-300);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  padding: 4px 12px;
+  border-radius: 99px;
+  margin-bottom: 16px;
+}
+
+.hero h1 {
+  font-size: clamp(32px, 5vw, 56px);
+  color: var(--white);
+  margin-bottom: 16px;
+  max-width: 560px;
+}
+
+.hero h1 em {
+  font-style: italic;
+  color: var(--green-300);
+}
+
+.hero p {
+  color: rgba(255,255,255,.7);
+  font-size: 17px;
+  max-width: 460px;
+  margin-bottom: 28px;
+  line-height: 1.6;
+}
+
+.hero-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+
+/* CATEGORIES BAR */
+.categories-bar {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+  margin-bottom: 28px;
+  scrollbar-width: none;
+}
+.categories-bar::-webkit-scrollbar { display:none; }
+
+.cat-pill {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  background: var(--surface);
+  border: 1.5px solid var(--border);
+  border-radius: 99px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: var(--transition);
+  font-family: inherit;
+}
+
+.cat-pill:hover, .cat-pill.active {
+  background: var(--green-600);
+  border-color: var(--green-600);
+  color: var(--white);
+}
+
+/* PRODUCT GRID */
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 20px;
+  margin-bottom: 40px;
+}
+
+.product-card {
+  background: var(--surface);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  transition: var(--transition);
+  box-shadow: var(--shadow-sm);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+}
+
+.product-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+  border-color: var(--green-400);
+}
+
+.product-img {
+  height: 150px;
+  background: linear-gradient(135deg, var(--green-50), var(--green-100));
+  display: grid;
+  place-items: center;
+  font-size: 56px;
+  border-bottom: 1.5px solid var(--border);
+}
+
+.dark .product-img {
+  background: linear-gradient(135deg, #0f2a1a, #1a3d28);
+}
+
+.product-badge {
+  position: absolute;
+  top: 12px; left: 12px;
+  background: var(--amber-400);
+  color: var(--slate-900);
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 99px;
+}
+
+.product-body { padding: 16px; flex: 1; display: flex; flex-direction: column; }
+
+.product-cat {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--green-500);
+  margin-bottom: 6px;
+}
+
+.product-name {
+  font-weight: 600;
+  font-size: 15px;
+  margin-bottom: 4px;
+  line-height: 1.3;
+}
+
+.product-desc {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-bottom: 12px;
+  flex: 1;
+}
+
+.product-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.product-price {
+  display: flex;
+  flex-direction: column;
+}
+
+.price-gross {
+  font-family: 'DM Serif Display', serif;
+  font-size: 20px;
+  color: var(--green-600);
+}
+
+.dark .price-gross { color: var(--green-400); }
+
+.price-tax {
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+.btn-add-cart {
+  width: 38px; height: 38px;
+  border-radius: 50%;
+  background: var(--green-600);
+  border: none;
+  color: var(--white);
+  font-size: 18px;
+  cursor: pointer;
+  transition: var(--transition);
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+}
+
+.btn-add-cart:hover {
+  background: var(--green-500);
+  transform: scale(1.1);
+  box-shadow: 0 4px 12px rgba(34,164,84,.4);
+}
+
+/* BUTTONS */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 22px;
+  border-radius: 99px;
+  border: none;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.btn-primary { background: var(--green-500); color: var(--white); }
+.btn-primary:hover { background: var(--green-400); box-shadow: 0 4px 16px rgba(34,164,84,.4); }
+
+.btn-outline { background: transparent; color: var(--white); border: 1.5px solid rgba(255,255,255,.3); }
+.btn-outline:hover { background: rgba(255,255,255,.1); }
+
+.btn-danger { background: var(--red-500); color: var(--white); }
+.btn-danger:hover { background: var(--red-400); }
+
+.btn-ghost { background: var(--surface); color: var(--text); border: 1.5px solid var(--border); }
+.btn-ghost:hover { border-color: var(--green-400); color: var(--green-600); }
+
+.btn-sm { padding: 8px 16px; font-size: 13px; }
+.btn-lg { padding: 14px 28px; font-size: 16px; }
+.btn:disabled { opacity:.5; cursor:not-allowed; }
+
+/* FORMS */
+.form-group { display: flex; flex-direction: column; gap: 6px; margin-bottom: 16px; }
+
+.form-label { font-size: 13px; font-weight: 600; color: var(--text-muted); letter-spacing: .3px; }
+
+.form-input {
+  padding: 11px 14px;
+  background: var(--bg);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--text);
+  font-family: inherit;
+  font-size: 14px;
+  outline: none;
+  transition: var(--transition);
+  width: 100%;
+}
+
+.form-input:focus {
+  border-color: var(--green-500);
+  box-shadow: var(--shadow-glow);
+  background: var(--surface);
+}
+
+.form-input::placeholder { color: var(--text-muted); opacity:.7; }
+
+/* CARD */
+.card {
+  background: var(--surface);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 28px;
+  box-shadow: var(--shadow-sm);
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+}
+
+.card-title { font-family: 'DM Serif Display', serif; font-size: 22px; }
+
+/* AUTH */
+.auth-wrapper {
+  min-height: calc(100vh - var(--header-h));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  background: linear-gradient(160deg, var(--green-900) 0%, var(--bg) 60%);
+  margin: calc(-32px) calc(-24px) 0;
+}
+
+.auth-box {
+  background: var(--surface);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-xl);
+  padding: 40px;
+  width: 100%;
+  max-width: 440px;
+  box-shadow: var(--shadow-lg);
+}
+
+.auth-logo { display: flex; align-items: center; gap: 10px; margin-bottom: 28px; }
+
+.auth-logo-icon {
+  width: 44px; height: 44px;
+  background: linear-gradient(135deg, var(--green-400), var(--green-700));
+  border-radius: var(--radius-sm);
+  display: grid;
+  place-items: center;
+  font-size: 22px;
+}
+
+.auth-logo-text { font-family: 'DM Serif Display', serif; font-size: 22px; }
+
+.auth-title { font-size: 28px; margin-bottom: 6px; }
+.auth-sub { color: var(--text-muted); font-size: 14px; margin-bottom: 28px; }
+
+.auth-switch { text-align: center; margin-top: 20px; font-size: 13px; color: var(--text-muted); }
+.auth-switch a { color: var(--green-500); cursor: pointer; font-weight: 600; text-decoration: none; }
+
+/* CART SIDEBAR */
+.cart-sidebar {
+  position: fixed;
+  top: 0; right: 0;
+  width: 400px;
+  height: 100vh;
+  background: var(--surface);
+  border-left: 1.5px solid var(--border);
+  box-shadow: var(--shadow-lg);
+  z-index: 200;
+  transform: translateX(100%);
+  transition: transform .35s cubic-bezier(.4,0,.2,1);
+  display: flex;
+  flex-direction: column;
+}
+
+.cart-sidebar.open { transform: translateX(0); }
+
+.cart-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.45);
+  z-index: 190;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .3s;
+}
+
+.cart-overlay.open { opacity:1; pointer-events: all; }
+
+.cart-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 24px 24px 16px;
+  border-bottom: 1.5px solid var(--border);
+}
+
+.cart-header h2 { font-size: 20px; }
+
+.cart-close {
+  width: 34px; height: 34px;
+  border: 1.5px solid var(--border);
+  border-radius: 50%;
+  background: transparent;
+  color: var(--text);
+  cursor: pointer;
+  font-size: 16px;
+  display: grid;
+  place-items: center;
+  transition: var(--transition);
+  font-family: inherit;
+}
+
+.cart-close:hover { background: var(--red-500); color: white; border-color: var(--red-500); }
+
+.cart-items {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.cart-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  background: var(--bg);
+  border-radius: var(--radius-md);
+  border: 1.5px solid var(--border);
+}
+
+.cart-item-icon {
+  width: 44px; height: 44px;
+  background: linear-gradient(135deg, var(--green-100), var(--green-50));
+  border-radius: var(--radius-sm);
+  display: grid;
+  place-items: center;
+  font-size: 22px;
+  flex-shrink: 0;
+}
+
+.dark .cart-item-icon { background: #1a3d28; }
+
+.cart-item-info { flex: 1; min-width: 0; }
+
+.cart-item-name { font-weight: 600; font-size: 14px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.cart-item-price { font-size: 13px; color: var(--green-500); font-weight: 600; }
+
+.cart-item-qty { display: flex; align-items: center; gap: 8px; }
+
+.qty-btn {
+  width: 26px; height: 26px;
+  border-radius: 50%;
+  border: 1.5px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  font-size: 14px;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  transition: var(--transition);
+  font-family: inherit;
+  font-weight: 700;
+}
+
+.qty-btn:hover { border-color: var(--green-500); color: var(--green-500); }
+.qty-num { font-weight: 700; font-size: 14px; min-width: 20px; text-align: center; }
+
+.cart-empty {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  color: var(--text-muted);
+  padding: 40px;
+  text-align: center;
+}
+
+.cart-empty-icon { font-size: 56px; }
+
+.cart-footer { padding: 16px 24px 24px; border-top: 1.5px solid var(--border); }
+.cart-totals { margin-bottom: 16px; }
+
+.cart-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+  padding: 4px 0;
+  color: var(--text-muted);
+}
+
+.cart-row.total {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text);
+  border-top: 1.5px solid var(--border);
+  margin-top: 8px;
+  padding-top: 10px;
+}
+
+/* POS VIEW */
+.pos-layout {
+  display: grid;
+  grid-template-columns: 1fr 380px;
+  gap: 24px;
+  align-items: start;
+}
+
+.pos-scanner-card {
+  background: linear-gradient(135deg, var(--green-900), var(--green-700));
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  margin-bottom: 20px;
+}
+
+.pos-scanner-card h3 { color: var(--white); font-size: 16px; margin-bottom: 16px; }
+
+.barcode-input-wrap { display: flex; gap: 10px; }
+
+.barcode-input-wrap .form-input {
+  background: rgba(255,255,255,.12);
+  border-color: rgba(255,255,255,.2);
+  color: var(--white);
+  font-size: 16px;
+  letter-spacing: 2px;
+}
+
+.barcode-input-wrap .form-input::placeholder { color: rgba(255,255,255,.4); }
+.barcode-input-wrap .form-input:focus { border-color: var(--green-300); background: rgba(255,255,255,.18); }
+
+.receipt-card { position: sticky; top: calc(var(--header-h) + 16px); }
+.receipt-items { max-height: 320px; overflow-y: auto; margin-bottom: 16px; }
+
+.receipt-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px dashed var(--border);
+  font-size: 13px;
+}
+
+.receipt-row:last-child { border-bottom: none; }
+
+.receipt-product { flex: 1; font-weight: 500; }
+.receipt-qty { color: var(--text-muted); margin: 0 12px; }
+.receipt-price { font-weight: 600; color: var(--green-600); }
+.dark .receipt-price { color: var(--green-400); }
+
+.receipt-totals {
+  background: var(--bg);
+  border-radius: var(--radius-sm);
+  padding: 14px;
+  margin-bottom: 16px;
+}
+
+.receipt-total-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+  padding: 3px 0;
+  color: var(--text-muted);
+}
+
+.receipt-total-row.grand {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text);
+  margin-top: 8px;
+  padding-top: 10px;
+  border-top: 2px solid var(--green-500);
+}
+
+/* TOAST */
+.toast-container {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 999;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  pointer-events: none;
+}
+
+.toast {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 18px;
+  background: var(--slate-900);
+  color: var(--white);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-lg);
+  font-size: 14px;
+  font-weight: 500;
+  animation: toastIn .35s cubic-bezier(.4,0,.2,1) forwards;
+  max-width: 320px;
+  border-left: 4px solid var(--green-400);
+}
+
+.toast.error { border-left-color: var(--red-400); }
+.toast.warning { border-left-color: var(--amber-400); }
+.toast.out { animation: toastOut .3s ease forwards; }
+.toast-icon { font-size: 18px; flex-shrink: 0; }
+
+@keyframes toastIn {
+  from { opacity:0; transform: translateX(80px) scale(.9); }
+  to   { opacity:1; transform: translateX(0) scale(1); }
+}
+
+@keyframes toastOut {
+  from { opacity:1; transform: translateX(0) scale(1); }
+  to   { opacity:0; transform: translateX(80px) scale(.9); }
+}
+
+/* STATS */
+.stats-strip {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+.stat-box {
+  background: var(--surface);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 20px;
+  text-align: center;
+}
+
+.stat-num { font-family: 'DM Serif Display', serif; font-size: 30px; color: var(--green-600); }
+.dark .stat-num { color: var(--green-400); }
+.stat-label { font-size: 12px; color: var(--text-muted); font-weight: 500; text-transform: uppercase; letter-spacing: 1px; margin-top: 4px; }
+
+/* MODAL */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.6);
+  z-index: 300;
+  display: none;
+  place-items: center;
+  padding: 20px;
+}
+
+.modal-overlay.open { display: grid; }
+
+.modal-box {
+  background: var(--surface);
+  border-radius: var(--radius-xl);
+  padding: 40px;
+  max-width: 420px;
+  width: 100%;
+  text-align: center;
+  animation: fadeIn .3s ease;
+  box-shadow: var(--shadow-lg);
+}
+
+.modal-icon { font-size: 64px; margin-bottom: 16px; }
+.modal-title { font-size: 26px; margin-bottom: 8px; }
+.modal-sub { color: var(--text-muted); margin-bottom: 28px; font-size: 15px; }
+
+.receipt-print {
+  background: var(--bg);
+  border-radius: var(--radius-md);
+  padding: 20px;
+  margin-bottom: 24px;
+  border: 1.5px dashed var(--border);
+  font-family: 'Courier New', monospace;
+  font-size: 13px;
+  text-align: left;
+  line-height: 1.8;
+  white-space: pre;
+  overflow-x: auto;
+}
+
+/* PROFILE */
+.profile-header {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 32px;
+}
+
+.profile-avatar {
+  width: 72px; height: 72px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--green-400), var(--green-700));
+  display: grid;
+  place-items: center;
+  font-size: 30px;
+  color: white;
+  font-family: 'DM Serif Display', serif;
+  flex-shrink: 0;
+}
+
+.profile-name { font-size: 22px; }
+.profile-email { color: var(--text-muted); font-size: 14px; }
+
+/* ORDERS TABLE */
+.orders-table { width: 100%; border-collapse: collapse; }
+
+.orders-table th {
+  text-align: left;
+  padding: 12px 14px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--text-muted);
+  border-bottom: 2px solid var(--border);
+}
+
+.orders-table td { padding: 14px; border-bottom: 1px solid var(--border); font-size: 14px; }
+.orders-table tr:last-child td { border-bottom: none; }
+
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 10px;
+  border-radius: 99px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.status-success { background: #d4f5e2; color: #0f3d24; }
+.status-pending { background: #fef3c7; color: #78350f; }
+.dark .status-success { background: #0f3d24; color: var(--green-300); }
+.dark .status-pending { background: #451a03; color: var(--amber-300); }
+
+/* LOADING */
+.loading-spinner {
+  display: inline-block;
+  width: 20px; height: 20px;
+  border: 2.5px solid rgba(255,255,255,.3);
+  border-top-color: var(--white);
+  border-radius: 50%;
+  animation: spin .7s linear infinite;
+}
+
+.loading-grid {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 60px;
+  gap: 12px;
+  color: var(--text-muted);
+}
+
+.loading-grid .loading-spinner {
+  border-color: rgba(34,164,84,.3);
+  border-top-color: var(--green-500);
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* UTILS */
+.hidden { display: none !important; }
+.flex { display: flex; }
+.gap-2 { gap: 8px; }
+.gap-3 { gap: 12px; }
+.mt-2 { margin-top: 8px; }
+.mt-4 { margin-top: 16px; }
+.mb-2 { margin-bottom: 8px; }
+.text-center { text-align: center; }
+.text-muted { color: var(--text-muted); }
+.font-bold { font-weight: 700; }
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+@media(max-width:600px) { .grid-2 { grid-template-columns: 1fr; } }
+
+hr.divider { border: none; border-top: 1.5px solid var(--border); margin: 20px 0; }
+
+.no-products { grid-column: 1/-1; text-align: center; padding: 60px; color: var(--text-muted); }
+.no-products-icon { font-size: 48px; margin-bottom: 12px; }
+
+.section-header { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 20px; }
+.section-title { font-size: 24px; }
+.section-sub { font-size: 14px; color: var(--text-muted); }
+
+/* RESPONSIVE */
+@media (max-width: 900px) {
+  header { padding: 0 16px; }
+  .header-search { display: none; }
+  .app-layout { padding: 20px 16px; }
+  .hero { padding: 36px 24px; }
+  .pos-layout { grid-template-columns: 1fr; }
+  .cart-sidebar { width: 100%; }
+  .stats-strip { grid-template-columns: 1fr 1fr; }
+  .products-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); }
+}
+
+@media (max-width: 500px) {
+  .hero h1 { font-size: 26px; }
+  .hero-actions { flex-direction: column; }
+  .stats-strip { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="header-logo" onclick="showView('catalog')">
+    <div class="logo-icon">🛒</div>
+    <span class="logo-text">Smart<span>Market</span></span>
+  </div>
+
+  <div class="header-search">
+    <span class="search-icon">🔍</span>
+    <input type="text" id="globalSearch" placeholder="Cerca prodotti..." oninput="filterProducts(this.value)">
+  </div>
+
+  <nav class="header-nav">
+    <button class="nav-btn" onclick="showView('catalog')">🏪 Negozio</button>
+    <button class="nav-btn" id="posNavBtn" onclick="showView('pos')" style="display:none">🖥️ Cassa</button>
+    <button class="nav-btn" id="profileNavBtn" onclick="showView('profile')" style="display:none">👤 <span id="headerUserName">Account</span></button>
+    <button class="nav-btn" id="loginNavBtn" onclick="showView('login')">Accedi</button>
+    <button class="nav-btn nav-btn-cart" onclick="openCart()">
+      🛒 Carrello
+      <span class="cart-badge hidden" id="cartBadge">0</span>
+    </button>
+    <button class="nav-btn" onclick="toggleTheme()" title="Tema">🌙</button>
+  </nav>
+</header>
+
+<!-- MAIN -->
+<div class="app-layout">
+
+  <!-- LOGIN VIEW -->
+  <div id="view-login" class="view">
+    <div class="auth-wrapper">
+      <div class="auth-box">
+        <div class="auth-logo">
+          <div class="auth-logo-icon">🛒</div>
+          <div class="auth-logo-text">SmartMarket</div>
+        </div>
+        <h1 class="auth-title">Bentornato!</h1>
+        <p class="auth-sub">Accedi al tuo account per continuare</p>
+
+        <div class="form-group">
+          <label class="form-label">Email</label>
+          <input class="form-input" id="loginEmail" type="email" placeholder="nome@email.it" autocomplete="email">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Password</label>
+          <input class="form-input" id="loginPassword" type="password" placeholder="••••••••"
+            autocomplete="current-password"
+            onkeydown="if(event.key==='Enter') login()">
+        </div>
+
+        <button class="btn btn-primary" style="width:100%; justify-content:center;" onclick="login()" id="loginBtn">
+          Accedi al tuo account →
+        </button>
+
+        <div class="auth-switch">
+          Non hai un account? <a onclick="showView('register')">Registrati gratis</a>
+        </div>
+
+        <hr class="divider">
+
+        <div class="auth-switch" style="font-size:12px;">
+          🔐 Demo: <code>admin@smartmarket.it</code> / <code>password</code>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- REGISTER VIEW -->
+  <div id="view-register" class="view">
+    <div class="auth-wrapper">
+      <div class="auth-box">
+        <div class="auth-logo">
+          <div class="auth-logo-icon">🛒</div>
+          <div class="auth-logo-text">SmartMarket</div>
+        </div>
+        <h1 class="auth-title">Crea account</h1>
+        <p class="auth-sub">Unisciti a SmartMarket — è gratis</p>
+
+        <div class="grid-2">
+          <div class="form-group">
+            <label class="form-label">Nome</label>
+            <input class="form-input" id="regNome" placeholder="Mario" autocomplete="given-name">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Cognome</label>
+            <input class="form-input" id="regCognome" placeholder="Rossi" autocomplete="family-name">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Email</label>
+          <input class="form-input" id="regEmail" type="email" placeholder="mario@email.it" autocomplete="email">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Password</label>
+          <input class="form-input" id="regPassword" type="password" placeholder="Crea una password sicura">
+        </div>
+
+        <button class="btn btn-primary" style="width:100%; justify-content:center;" onclick="register()">
+          Crea il mio account →
+        </button>
+
+        <div class="auth-switch">
+          Hai già un account? <a onclick="showView('login')">Accedi</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CATALOG VIEW -->
+  <div id="view-catalog" class="view">
+
+    <div class="hero">
+      <div class="hero-tag">✨ Nuovo arrivo ogni settimana</div>
+      <h1>Qualità, convenienza e velocità in un </br>solo <em>click.</em></h1>
+      <p>Prodotti freschi, offerte esclusive per i soci e consegna rapida. Tutto in un unico posto.</p>
+      <div class="hero-actions">
+        <button class="btn btn-primary btn-lg" onclick="document.getElementById('catalogGrid').scrollIntoView({behavior:'smooth'})">
+          Scopri i prodotti
+        </button>
+        <button class="btn btn-outline btn-lg" id="heroAuthBtn" onclick="showView('login')">
+          Accedi / Registrati
+        </button>
+      </div>
+    </div>
+
+    <div class="stats-strip">
+      <div class="stat-box">
+        <div class="stat-num" id="statProducts">—</div>
+        <div class="stat-label">Prodotti disponibili</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num">∞</div>
+        <div class="stat-label">Casse attive</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num">4.7⭐</div>
+        <div class="stat-label">Valutazione media</div>
+      </div>
+    </div>
+
+    <div class="categories-bar" id="categoriesBar">
+      <button class="cat-pill active" onclick="filterCategory(null, this)">🌟 Tutti</button>
+    </div>
+
+    <div class="section-header" id="catalogGrid">
+      <h2 class="section-title">I nostri prodotti</h2>
+      <span class="section-sub" id="productCount"></span>
+    </div>
+
+    <div class="products-grid" id="productsGrid">
+      <div class="loading-grid">
+        <div class="loading-spinner"></div>
+        <span>Caricamento prodotti…</span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- POS VIEW -->
+  <div id="view-pos" class="view">
+
+    <div class="section-header" style="margin-bottom:28px;">
+      <h2 class="section-title">🖥️ Punto Cassa</h2>
+      <span class="text-muted" style="font-size:14px;">Gestione scontrini</span>
+    </div>
+
+    <div class="pos-layout">
+
+      <!-- Left panel -->
+      <div>
+
+        <div class="pos-scanner-card">
+          <h3>📷 Scanner Barcode</h3>
+          <div class="barcode-input-wrap">
+            <input class="form-input" id="barcodeInput" placeholder="Scansiona o digita il barcode…"
+              onkeydown="if(event.key==='Enter') addProductPos()">
+            <button class="btn btn-primary" onclick="addProductPos()">Aggiungi</button>
+          </div>
+          <p style="color:rgba(255,255,255,.5); font-size:12px; margin-top:10px;">
+            Barcode di prova: 800100000001 — 800100000006
+          </p>
+        </div>
+
+        <div class="card" style="margin-bottom:20px;">
+          <div class="card-header">
+            <h3 class="card-title" style="font-size:18px;">Apertura Scontrino</h3>
+            <span id="receiptStatus" class="status-badge status-pending">⏸ Non aperto</span>
+          </div>
+
+          <div class="grid-2">
+            <div class="form-group" style="margin-bottom:0">
+              <label class="form-label">Tessera cliente (opz.)</label>
+              <input class="form-input" id="tessera" placeholder="es. 100001">
+            </div>
+            <div class="form-group" style="margin-bottom:0">
+              <label class="form-label">Numero cassa</label>
+              <input class="form-input" id="cassa" value="1" type="number" min="1" max="3">
+            </div>
+          </div>
+
+          <div class="flex gap-2 mt-4">
+            <button class="btn btn-primary" onclick="openReceiptPos()">🧾 Apri scontrino</button>
+            <button class="btn btn-danger" onclick="closeReceiptPos()">✅ Chiudi e paga</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title" style="font-size:18px;">🧺 Articoli scansionati</h3>
+            <button class="btn btn-ghost btn-sm" onclick="clearPosCart()">Svuota</button>
+          </div>
+
+          <div id="posCartList" style="min-height:80px;">
+            <p class="text-muted text-center" style="padding:20px; font-size:14px;">Nessun articolo — scansiona un prodotto</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Receipt panel -->
+      <div>
+        <div class="card receipt-card">
+          <h3 class="card-title" style="font-size:18px; margin-bottom:16px;">🧾 Scontrino</h3>
+
+          <div style="text-align:center; margin-bottom:12px; font-size:11px; color:var(--text-muted); font-family:monospace;">
+            ──────── SmartMarket ────────<br>
+            <span id="receiptDateTime"></span>
+          </div>
+
+          <div class="receipt-items" id="receiptItems">
+            <p class="text-muted" style="font-size:13px; text-align:center; padding:20px;">Scontrino vuoto</p>
+          </div>
+
+          <div class="receipt-totals">
+            <div class="receipt-total-row">
+              <span>Imponibile netto</span>
+              <span id="rtNetto">€ 0.00</span>
+            </div>
+            <div class="receipt-total-row">
+              <span>IVA</span>
+              <span id="rtIva">€ 0.00</span>
+            </div>
+            <div class="receipt-total-row grand">
+              <span>TOTALE</span>
+              <span id="rtLordo">€ 0.00</span>
+            </div>
+          </div>
+
+          <button class="btn btn-primary" style="width:100%;justify-content:center;" onclick="closeReceiptPos()">
+            💳 Chiudi e paga
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- PROFILE VIEW -->
+  <div id="view-profile" class="view">
+
+    <div class="profile-header">
+      <div class="profile-avatar" id="profileAvatar">?</div>
+      <div>
+        <div class="profile-name" id="profileName">—</div>
+        <div class="profile-email" id="profileEmail">—</div>
+        <div class="mt-2">
+          <span id="profileRuolo" class="status-badge status-success" style="margin-right:8px;"></span>
+          <button class="btn btn-ghost btn-sm" onclick="logout()">🚪 Logout</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <h3 class="card-title" style="font-size:18px;">📋 Informazioni account</h3>
+      </div>
+      <p class="text-muted" style="font-size:14px; line-height:1.6;">
+        Stai navigando come utente registrato. Puoi usare il modulo Cassa per gestire gli scontrini oppure aggiungere prodotti al carrello dal negozio.
+      </p>
+    </div>
+
+  </div>
+
+</div><!-- /.app-layout -->
+
+<!-- CART SIDEBAR -->
+<div class="cart-overlay" id="cartOverlay" onclick="closeCart()"></div>
+<div class="cart-sidebar" id="cartSidebar">
+  <div class="cart-header">
+    <h2>🛒 Carrello</h2>
+    <button class="cart-close" onclick="closeCart()">✕</button>
+  </div>
+
+  <div class="cart-items" id="cartItems">
+    <div class="cart-empty">
+      <div class="cart-empty-icon">🛒</div>
+      <strong>Il carrello è vuoto</strong>
+      <span>Aggiungi prodotti per iniziare</span>
+    </div>
+  </div>
+
+  <div class="cart-footer">
+    <div class="cart-totals">
+      <div class="cart-row"><span>Imponibile netto</span><span id="cartSubtotal">€ 0.00</span></div>
+      <div class="cart-row"><span>IVA stimata</span><span id="cartTax">€ 0.00</span></div>
+      <div class="cart-row total"><span>Totale</span><span id="cartTotal">€ 0.00</span></div>
+    </div>
+
+    <button class="btn btn-primary" style="width:100%;justify-content:center;" onclick="goToCheckout()">
+      Procedi all'acquisto →
+    </button>
+  </div>
+</div>
+
+<!-- MODAL SCONTRINO -->
+<div class="modal-overlay" id="receiptModal">
+  <div class="modal-box">
+    <div class="modal-icon">✅</div>
+    <h2 class="modal-title">Pagamento completato!</h2>
+    <p class="modal-sub">Grazie per aver scelto SmartMarket</p>
+    <div class="receipt-print" id="modalReceiptContent"></div>
+    <button class="btn btn-primary" onclick="document.getElementById('receiptModal').classList.remove('open'); showView('catalog');">
+      Torna al negozio
+    </button>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast-container" id="toastContainer"></div>
+
+<script>
+/* =========================================
+   CONFIGURAZIONE
+========================================= */
+const API = "api.php"; // Percorso relativo all'API PHP
+
+/* =========================================
+   STATE
+========================================= */
+let currentUser  = null;
+let allProducts  = [];
+let filteredProducts = [];
+let cart         = {}; // barcode -> {nome, prezzo_netto, iva, qty, emoji}
+let posCart      = {}; // stesso schema per POS
+let currentCategory = null;
+let receiptOpen  = false;
+
+/* =========================================
+   EMOJI MAP PER CATEGORIA
+========================================= */
+const catEmoji = {
+  'Pasta':     '🍝',
+  'Bevande':   '🥤',
+  'Dolci':     '🍫',
+  'Latticini': '🥛',
+  'Conserve':  '🥫',
+  'default':   '🛒'
+};
+
+function getEmoji(catName) {
+  return catEmoji[catName] || catEmoji.default;
+}
+
+/* =========================================
+   HELPER API
+   Tutte le chiamate vanno a api.php via POST JSON
+========================================= */
+async function api(data) {
+  try {
+    const res = await fetch(API, {
+      method:  'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body:    JSON.stringify(data),
+      credentials: 'same-origin'  // invia i cookie di sessione PHP
+    });
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    return await res.json();
+  } catch(e) {
+    return { success: false, message: 'Errore di rete: ' + e.message };
+  }
+}
+
+/* =========================================
+   TOAST
+========================================= */
+function toast(msg, type = 'success') {
+  const icons = { success: '✅', error: '❌', warning: '⚠️', info: 'ℹ️' };
+  const el = document.createElement('div');
+  el.className = `toast${type === 'error' ? ' error' : type === 'warning' ? ' warning' : ''}`;
+  el.innerHTML = `<span class="toast-icon">${icons[type] || 'ℹ️'}</span><span>${msg}</span>`;
+  const container = document.getElementById('toastContainer');
+  container.appendChild(el);
+  setTimeout(() => {
+    el.classList.add('out');
+    setTimeout(() => el.remove(), 400);
+  }, 3500);
+}
+
+/* =========================================
+   NAVIGAZIONE VIEWS
+========================================= */
+function showView(view) {
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+  const el = document.getElementById('view-' + view);
+  if (el) el.classList.add('active');
+
+  if (view === 'catalog') loadProducts();
+  if (view === 'profile') loadProfile();
+  if (view === 'pos') { updatePosReceiptTime(); updatePosReceipt(); }
+}
+
+/* =========================================
+   TEMA
+========================================= */
+function toggleTheme() {
+  document.body.classList.toggle('dark');
+  const btn = document.querySelector('.nav-btn[onclick="toggleTheme()"]');
+  btn.textContent = document.body.classList.contains('dark') ? '☀️' : '🌙';
+}
+
+/* =========================================
+   AUTH — LOGIN
+   L'API ritorna {success, data:{id,nome,cognome,email,ruolo}}
+========================================= */
+async function login() {
+  const btn   = document.getElementById('loginBtn');
+  const email = document.getElementById('loginEmail').value.trim();
+  const password = document.getElementById('loginPassword').value;
+
+  if (!email || !password) { toast('Compila tutti i campi', 'warning'); return; }
+
+  btn.innerHTML = '<span class="loading-spinner"></span> Accesso…';
+  btn.disabled = true;
+
+  const r = await api({ action: 'login', email, password });
+
+  btn.innerHTML = 'Accedi al tuo account →';
+  btn.disabled = false;
+
+  if (!r.success) { toast(r.message, 'error'); return; }
+
+  // Salva i dati utente dalla risposta API
+  currentUser = {
+    id:      r.data.id,
+    nome:    r.data.nome,
+    cognome: r.data.cognome,
+    email:   r.data.email,
+    ruolo:   r.data.ruolo
+  };
+
+  onLoginSuccess();
+  toast(`Bentornato, ${currentUser.nome}! 👋`, 'success');
+  showView('catalog');
+}
+
+/* =========================================
+   AUTH — REGISTRAZIONE
+========================================= */
+async function register() {
+  const nome     = document.getElementById('regNome').value.trim();
+  const cognome  = document.getElementById('regCognome').value.trim();
+  const email    = document.getElementById('regEmail').value.trim();
+  const password = document.getElementById('regPassword').value;
+
+  if (!nome || !cognome || !email || !password) { toast('Compila tutti i campi', 'warning'); return; }
+  if (password.length < 6) { toast('La password deve essere di almeno 6 caratteri', 'warning'); return; }
+
+  const r = await api({ action: 'register', nome, cognome, email, password });
+
+  if (!r.success) { toast(r.message, 'error'); return; }
+
+  toast('Account creato! Ora puoi accedere 🎉');
+  // Pre-compila email nel form di login
+  document.getElementById('loginEmail').value = email;
+  showView('login');
+}
+
+/* =========================================
+   AUTH — LOGOUT
+========================================= */
+async function logout() {
+  await api({ action: 'logout' });
+  currentUser = null;
+  cart = {};
+  posCart = {};
+  receiptOpen = false;
+  updateCartBadge();
+  onLogoutSuccess();
+  toast('Logout effettuato');
+  showView('catalog');
+}
+
+function onLoginSuccess() {
+  document.getElementById('loginNavBtn').style.display  = 'none';
+  document.getElementById('profileNavBtn').style.display = 'flex';
+  document.getElementById('posNavBtn').style.display     = 'flex';
+  document.getElementById('heroAuthBtn').style.display   = 'none';
+
+  const nome = currentUser.nome.charAt(0).toUpperCase() + currentUser.nome.slice(1);
+  document.getElementById('headerUserName').textContent = nome;
+}
+
+function onLogoutSuccess() {
+  document.getElementById('loginNavBtn').style.display  = 'flex';
+  document.getElementById('profileNavBtn').style.display = 'none';
+  document.getElementById('posNavBtn').style.display     = 'none';
+  document.getElementById('heroAuthBtn').style.display   = 'inline-flex';
+}
+
+/* =========================================
+   PRODOTTI — CARICAMENTO
+   L'API ritorna {success, data:{products:[{id,barcode,nome,descrizione,
+   prezzo_netto,iva,prezzo_ivato,giacenza,categoria}]}}
+========================================= */
+async function loadProducts() {
+  if (allProducts.length > 0) {
+    renderProducts(filteredProducts);
+    return;
+  }
+
+  document.getElementById('productsGrid').innerHTML = `
+    <div class="loading-grid">
+      <div class="loading-spinner"></div>
+      <span>Caricamento prodotti…</span>
+    </div>`;
+
+  const r = await api({ action: 'products' });
+
+  if (!r.success) {
+    document.getElementById('productsGrid').innerHTML =
+      `<div class="no-products"><div class="no-products-icon">⚠️</div>
+       <strong>Errore nel caricamento</strong>
+       <p class="text-muted mt-2">${r.message}</p>
+       <button class="btn btn-ghost" style="margin-top:16px;" onclick="allProducts=[]; loadProducts()">Riprova</button></div>`;
+    return;
+  }
+
+  allProducts      = r.data.products;
+  filteredProducts = [...allProducts];
+
+  document.getElementById('statProducts').textContent = allProducts.length;
+
+  // Costruisce la barra categorie
+  const cats = [...new Set(allProducts.map(p => p.categoria || 'Altro').filter(Boolean))].sort();
+  const bar  = document.getElementById('categoriesBar');
+  bar.innerHTML = `<button class="cat-pill active" onclick="filterCategory(null, this)">🌟 Tutti</button>`;
+  cats.forEach(cat => {
+    const btn = document.createElement('button');
+    btn.className = 'cat-pill';
+    btn.textContent = getEmoji(cat) + ' ' + cat;
+    btn.onclick = function() { filterCategory(cat, this); };
+    bar.appendChild(btn);
+  });
+
+  renderProducts(allProducts);
+}
+
+/* =========================================
+   PRODOTTI — RENDER
+========================================= */
+function renderProducts(products) {
+  const grid = document.getElementById('productsGrid');
+  document.getElementById('productCount').textContent = products.length + ' prodotti';
+
+  if (!products.length) {
+    grid.innerHTML = `
+      <div class="no-products">
+        <div class="no-products-icon">🔍</div>
+        <strong>Nessun prodotto trovato</strong>
+        <p class="text-muted mt-2">Prova con un'altra ricerca o categoria</p>
+      </div>`;
+    return;
+  }
+
+  grid.innerHTML = products.map(p => {
+    const ivato = p.prezzo_ivato
+      ? parseFloat(p.prezzo_ivato).toFixed(2)
+      : (parseFloat(p.prezzo_netto) * (1 + parseFloat(p.iva) / 100)).toFixed(2);
+    const emoji = getEmoji(p.categoria || '');
+    const cat   = p.categoria || 'Prodotto';
+
+    // Escape per attributi HTML
+    const safeName = (p.nome || '').replace(/'/g, "\\'").replace(/"/g, '&quot;');
+    const safeCat  = (cat || '').replace(/'/g, "\\'");
+
+    return `
+      <div class="product-card" onclick="addToCart('${p.barcode}','${safeName}',${p.prezzo_netto},${p.iva},'${emoji}')">
+        ${parseInt(p.iva) === 22 ? '<div class="product-badge">IVA 22%</div>' : ''}
+        <div class="product-img">${emoji}</div>
+        <div class="product-body">
+          <div class="product-cat">${cat}</div>
+          <div class="product-name">${p.nome}</div>
+          <div class="product-desc">${p.descrizione || 'Prodotto di qualità selezionato'}</div>
+          <div class="product-footer">
+            <div class="product-price">
+              <span class="price-gross">€ ${ivato}</span>
+              <span class="price-tax">IVA ${p.iva}% incl.</span>
+            </div>
+            <button class="btn-add-cart" title="Aggiungi al carrello"
+              onclick="event.stopPropagation(); addToCart('${p.barcode}','${safeName}',${p.prezzo_netto},${p.iva},'${emoji}')">+</button>
+          </div>
+        </div>
+      </div>`;
+  }).join('');
+}
+
+/* =========================================
+   PRODOTTI — FILTRI
+========================================= */
+function filterCategory(cat, btn) {
+  currentCategory = cat;
+  document.querySelectorAll('.cat-pill').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  applyFilters();
+}
+
+function filterProducts(q) {
+  applyFilters(q);
+}
+
+function applyFilters(searchOverride) {
+  const q = searchOverride !== undefined
+    ? searchOverride
+    : document.getElementById('globalSearch').value;
+
+  filteredProducts = allProducts.filter(p => {
+    const matchCat    = !currentCategory || (p.categoria === currentCategory);
+    const matchSearch = !q || p.nome.toLowerCase().includes(q.toLowerCase()) ||
+                        (p.descrizione || '').toLowerCase().includes(q.toLowerCase());
+    return matchCat && matchSearch;
+  });
+  renderProducts(filteredProducts);
+}
+
+/* =========================================
+   CARRELLO (negozio)
+========================================= */
+function addToCart(barcode, nome, prezzo_netto, iva, emoji) {
+  if (!cart[barcode]) {
+    cart[barcode] = { nome, prezzo_netto: parseFloat(prezzo_netto), iva: parseFloat(iva), emoji, qty: 0 };
+  }
+  cart[barcode].qty++;
+  updateCartBadge();
+  renderCartSidebar();
+  toast(nome + ' aggiunto al carrello 🛒');
+}
+
+function changeQty(barcode, delta) {
+  if (!cart[barcode]) return;
+  cart[barcode].qty += delta;
+  if (cart[barcode].qty <= 0) delete cart[barcode];
+  updateCartBadge();
+  renderCartSidebar();
+}
+
+function updateCartBadge() {
+  const total = Object.values(cart).reduce((s, i) => s + i.qty, 0);
+  const badge = document.getElementById('cartBadge');
+  badge.textContent = total;
+  badge.classList.toggle('hidden', total === 0);
+}
+
+function renderCartSidebar() {
+  const container = document.getElementById('cartItems');
+  const keys = Object.keys(cart);
+
+  if (!keys.length) {
+    container.innerHTML = `
+      <div class="cart-empty">
+        <div class="cart-empty-icon">🛒</div>
+        <strong>Il carrello è vuoto</strong>
+        <span>Aggiungi prodotti per iniziare</span>
+      </div>`;
+    document.getElementById('cartSubtotal').textContent = '€ 0.00';
+    document.getElementById('cartTax').textContent      = '€ 0.00';
+    document.getElementById('cartTotal').textContent    = '€ 0.00';
+    return;
+  }
+
+  let netto = 0, ivaAmt = 0;
+  container.innerHTML = keys.map(b => {
+    const item   = cart[b];
+    const sub    = item.prezzo_netto * item.qty;
+    const taxAmt = sub * (item.iva / 100);
+    netto   += sub;
+    ivaAmt  += taxAmt;
+    return `
+      <div class="cart-item">
+        <div class="cart-item-icon">${item.emoji}</div>
+        <div class="cart-item-info">
+          <div class="cart-item-name">${item.nome}</div>
+          <div class="cart-item-price">€ ${(sub + taxAmt).toFixed(2)}</div>
+        </div>
+        <div class="cart-item-qty">
+          <button class="qty-btn" onclick="changeQty('${b}',-1)">−</button>
+          <span class="qty-num">${item.qty}</span>
+          <button class="qty-btn" onclick="changeQty('${b}',1)">+</button>
+        </div>
+      </div>`;
+  }).join('');
+
+  const lordo = netto + ivaAmt;
+  document.getElementById('cartSubtotal').textContent = '€ ' + netto.toFixed(2);
+  document.getElementById('cartTax').textContent      = '€ ' + ivaAmt.toFixed(2);
+  document.getElementById('cartTotal').textContent    = '€ ' + lordo.toFixed(2);
+}
+
+function openCart()  {
+  renderCartSidebar();
+  document.getElementById('cartSidebar').classList.add('open');
+  document.getElementById('cartOverlay').classList.add('open');
+}
+function closeCart() {
+  document.getElementById('cartSidebar').classList.remove('open');
+  document.getElementById('cartOverlay').classList.remove('open');
+}
+
+function goToCheckout() {
+  if (!Object.keys(cart).length) { toast('Il carrello è vuoto', 'warning'); return; }
+  if (!currentUser)  { toast('Accedi per procedere all\'acquisto', 'warning'); closeCart(); showView('login'); return; }
+  // Trasferisci carrello al POS
+  posCart = {};
+  for (const b in cart) { posCart[b] = { ...cart[b] }; }
+  closeCart();
+  showView('pos');
+  renderPosCart();
+  updatePosReceipt();
+  toast('Carrello trasferito alla cassa ✅');
+}
+
+/* =========================================
+   POS — APERTURA SCONTRINO
+   Chiama: {action:'open_receipt', tessera, cassa}
+   Risposta: {success, message}
+   La sessione PHP tiene traccia del receipt_id
+========================================= */
+async function openReceiptPos() {
+  if (receiptOpen) { toast('Uno scontrino è già aperto', 'warning'); return; }
+
+  const tessera = document.getElementById('tessera').value.trim();
+  const cassa   = parseInt(document.getElementById('cassa').value) || 1;
+
+  const r = await api({ action: 'open_receipt', tessera, cassa });
+
+  if (!r.success) { toast(r.message, 'error'); return; }
+
+  receiptOpen = true;
+  document.getElementById('receiptStatus').className   = 'status-badge status-success';
+  document.getElementById('receiptStatus').textContent = '✅ Aperto';
+  toast('Scontrino aperto 🧾');
+  updatePosReceiptTime();
+}
+
+/* =========================================
+   POS — AGGIUNTA PRODOTTO VIA BARCODE
+   Chiama: {action:'barcode', barcode} → ottieni dati prodotto
+   Se scontrino aperto, chiama anche {action:'add_product', barcode}
+========================================= */
+async function addProductPos() {
+  const barcode = document.getElementById('barcodeInput').value.trim();
+  if (!barcode) { toast('Inserisci un barcode', 'warning'); return; }
+
+  // Recupera info prodotto
+  const p = await api({ action: 'barcode', barcode });
+
+  if (!p.success) { toast(p.message, 'error'); return; }
+
+  const prod = p.data; // {id, barcode, nome, prezzo_netto, iva, categoria, ...}
+
+  // Se scontrino aperto, registra in DB
+  if (receiptOpen) {
+    const addR = await api({ action: 'add_product', barcode });
+    if (!addR.success) { toast('DB: ' + addR.message, 'warning'); }
+  }
+
+  // Aggiorna carrello POS locale
+  if (!posCart[barcode]) {
+    const emoji = getEmoji(prod.categoria || '');
+    posCart[barcode] = {
+      nome:        prod.nome,
+      prezzo_netto: parseFloat(prod.prezzo_netto),
+      iva:          parseFloat(prod.iva),
+      emoji,
+      qty: 0
+    };
+  }
+  posCart[barcode].qty++;
+
+  renderPosCart();
+  updatePosReceipt();
+  document.getElementById('barcodeInput').value = '';
+  document.getElementById('barcodeInput').focus();
+  toast(prod.nome + ' aggiunto ✅');
+}
+
+function clearPosCart() {
+  posCart = {};
+  renderPosCart();
+  updatePosReceipt();
+}
+
+/* =========================================
+   POS — RENDER TABELLA ARTICOLI
+========================================= */
+function renderPosCart() {
+  const container = document.getElementById('posCartList');
+  const keys = Object.keys(posCart);
+
+  if (!keys.length) {
+    container.innerHTML = '<p class="text-muted text-center" style="padding:20px; font-size:14px;">Nessun articolo — scansiona un prodotto</p>';
+    return;
+  }
+
+  container.innerHTML = `
+    <table style="width:100%; border-collapse:collapse;">
+      <thead><tr>
+        <th style="text-align:left; padding:8px 12px; font-size:12px; text-transform:uppercase; letter-spacing:1px; color:var(--text-muted); border-bottom:1.5px solid var(--border);">Prodotto</th>
+        <th style="text-align:center; padding:8px; font-size:12px; text-transform:uppercase; letter-spacing:1px; color:var(--text-muted); border-bottom:1.5px solid var(--border);">Q.tà</th>
+        <th style="text-align:right; padding:8px 12px; font-size:12px; text-transform:uppercase; letter-spacing:1px; color:var(--text-muted); border-bottom:1.5px solid var(--border);">Subtot.</th>
+      </tr></thead>
+      <tbody>${keys.map(b => {
+        const item = posCart[b];
+        const sub  = (item.prezzo_netto * (1 + item.iva / 100) * item.qty).toFixed(2);
+        return `<tr>
+          <td style="padding:12px;">${item.emoji} ${item.nome}</td>
+          <td style="text-align:center; padding:12px; font-weight:700;">${item.qty}</td>
+          <td style="text-align:right; padding:12px; color:var(--green-600); font-weight:600;">€ ${sub}</td>
+        </tr>`;
+      }).join('')}</tbody>
+    </table>`;
+}
+
+/* =========================================
+   POS — SCONTRINO LATERALE
+========================================= */
+function updatePosReceipt() {
+  updatePosReceiptTime();
+  const keys    = Object.keys(posCart);
+  const itemsEl = document.getElementById('receiptItems');
+
+  if (!keys.length) {
+    itemsEl.innerHTML = '<p class="text-muted" style="font-size:13px; text-align:center; padding:20px;">Scontrino vuoto</p>';
+    document.getElementById('rtNetto').textContent = '€ 0.00';
+    document.getElementById('rtIva').textContent   = '€ 0.00';
+    document.getElementById('rtLordo').textContent = '€ 0.00';
+    return;
+  }
+
+  let netto = 0, ivaAmt = 0;
+  itemsEl.innerHTML = keys.map(b => {
+    const item   = posCart[b];
+    const sub    = item.prezzo_netto * item.qty;
+    const taxAmt = sub * item.iva / 100;
+    netto   += sub;
+    ivaAmt  += taxAmt;
+    return `<div class="receipt-row">
+      <span class="receipt-product">${item.nome}</span>
+      <span class="receipt-qty">x${item.qty}</span>
+      <span class="receipt-price">€ ${(sub + taxAmt).toFixed(2)}</span>
+    </div>`;
+  }).join('');
+
+  document.getElementById('rtNetto').textContent = '€ ' + netto.toFixed(2);
+  document.getElementById('rtIva').textContent   = '€ ' + ivaAmt.toFixed(2);
+  document.getElementById('rtLordo').textContent = '€ ' + (netto + ivaAmt).toFixed(2);
+}
+
+function updatePosReceiptTime() {
+  const now = new Date();
+  document.getElementById('receiptDateTime').textContent =
+    now.toLocaleDateString('it-IT') + ' — ' +
+    now.toLocaleTimeString('it-IT', { hour: '2-digit', minute: '2-digit' });
+}
+
+/* =========================================
+   POS — CHIUSURA SCONTRINO
+   Se scontrino aperto in DB → chiama {action:'close_receipt'}
+   La risposta contiene i totali finali calcolati dal server
+========================================= */
+async function closeReceiptPos() {
+  if (!Object.keys(posCart).length) { toast('Aggiungi almeno un prodotto', 'warning'); return; }
+
+  let netto = 0, ivaAmt = 0;
+  for (const b in posCart) {
+    const item = posCart[b];
+    const sub  = item.prezzo_netto * item.qty;
+    netto   += sub;
+    ivaAmt  += sub * item.iva / 100;
+  }
+
+  let totali = { netto: netto.toFixed(2), iva: ivaAmt.toFixed(2), lordo: (netto + ivaAmt).toFixed(2) };
+
+  if (receiptOpen) {
+    const r = await api({ action: 'close_receipt' });
+    if (r.success && r.data) {
+      // Usa i totali calcolati dal server (più affidabili)
+      totali = { netto: r.data.netto, iva: r.data.iva, lordo: r.data.lordo };
+    }
+  }
+
+  // Mostra il modal con lo scontrino
+  const now   = new Date();
+  const items = Object.values(posCart).map(item => {
+    const lordo = (item.prezzo_netto * (1 + item.iva / 100) * item.qty).toFixed(2);
+    return `${item.nome.substring(0, 22).padEnd(22)} x${item.qty}  € ${lordo}`;
+  }).join('\n');
+
+  document.getElementById('modalReceiptContent').textContent =
+`SmartMarket — Scontrino fiscale
+${now.toLocaleString('it-IT')}
+─────────────────────────────
+${items}
+─────────────────────────────
+Netto:   € ${parseFloat(totali.netto).toFixed(2)}
+IVA:     € ${parseFloat(totali.iva).toFixed(2)}
+TOTALE:  € ${parseFloat(totali.lordo).toFixed(2)}
+─────────────────────────────
+Grazie per aver scelto SmartMarket!`;
+
+  document.getElementById('receiptModal').classList.add('open');
+
+  // Reset stato
+  posCart     = {};
+  cart        = {};
+  receiptOpen = false;
+  updateCartBadge();
+  renderPosCart();
+  updatePosReceipt();
+  document.getElementById('receiptStatus').className   = 'status-badge status-pending';
+  document.getElementById('receiptStatus').textContent = '⏸ Non aperto';
+}
+
+/* =========================================
+   PROFILO
+========================================= */
+function loadProfile() {
+  if (!currentUser) { showView('login'); return; }
+
+  const iniziale = currentUser.nome.charAt(0).toUpperCase();
+  document.getElementById('profileAvatar').textContent = iniziale;
+  document.getElementById('profileName').textContent   = currentUser.nome + ' ' + currentUser.cognome;
+  document.getElementById('profileEmail').textContent  = currentUser.email;
+
+  const ruoloBadge = document.getElementById('profileRuolo');
+  ruoloBadge.textContent = '👤 ' + (currentUser.ruolo || 'cliente');
+}
+
+/* =========================================
+   INIT
+========================================= */
+showView('catalog');
+loadProducts();
+</script>
+</body>
+</html>

@@ -143,30 +143,6 @@ Il progetto implementa diverse misure di sicurezza:
 
 ---
 
-##  Struttura del Progetto
-
-```text
-SmartMarket/
-
-├── index.html
-├── style.css
-├── script.js
-├── api.php
-├── database.sql
-
-├── assets/
-│   ├── images/
-│   └── icons/
-
-├── components/
-│   ├── cart/
-│   ├── products/
-│   └── pos/
-
-└── docs/
-    └── documentazione.pdf
-```
-
 ##  Competenze Acquisite/Utilizzate
 
 Durante lo sviluppo del progetto sono state approfondite competenze relative a:

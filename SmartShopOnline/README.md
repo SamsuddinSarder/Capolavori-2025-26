@@ -1,4 +1,4 @@
-# 🛒 SmartMarket
+#  SmartMarket
 
 ### Progettazione e sviluppo di un ecosistema digitale per la gestione intelligente di un supermercato
 
@@ -9,7 +9,7 @@
 
 ---
 
-## 📖 Descrizione
+##  Descrizione
 
 SmartMarket è una piattaforma web sviluppata per simulare la gestione completa di un supermercato moderno. Il sistema integra un catalogo prodotti online, la gestione degli utenti, un carrello della spesa e un terminale POS (Point Of Sale) per l'emissione degli scontrini.
 
